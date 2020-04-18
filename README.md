@@ -27,21 +27,22 @@ Anime / series have to be sorted in an order like this:
 
 
 
-### Version 0.1
+### Version 0.1.1
 Patchouli can be used from terminal by opening 'patchouli.py'
 
 She's able to
 - display commands with 'help!'
 - index your anime/video files into a json file
-
+- edit settings like index.json save path and filename
+- run in simulation mode (now only usable for simulating index)
 
 
 #### What's planned:
 - comments and documentation
 - display stats like 'number of series', 'biggest file'
 - display specific stats for a series like audio languages, subtitles
-- edit settings like index.json save path and filename
 - help renaming folders, etc. to match the folder system described above
 - monitor changes to files/folders and refresh the index automatically
-- after providing a download folder to monitor, automatically sort the files downloaded by your favourite into your archive and update the index
-- strip the video files of unwanted stuff like foreign subtitles/sound, ...
+- strip the video files of unwanted stuff like foreign subtitles/sound, ... (v0.9)
+- after providing a download folder to monitor, automatically sort the files downloaded by your favourite into your archive and update the index (v1.0)
+- be able to scrape direct download links from specific sites (v2.0)
