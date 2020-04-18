@@ -2,7 +2,8 @@ import os
 import json
 from ffprobe_analyze import collect_info
 
-def do_index(index_path, anime_path):
+
+def do_index(index_path, anime_path, simulation_mode):
     json_data = {}
     with open(index_path, 'w') as f:
         # traverse dir
@@ -19,17 +20,24 @@ def do_index(index_path, anime_path):
                 season = season[-1]
                 size = 0
                 folge = 0
-                for file in files:
-                    folge += 1
-                    size = round(os.path.getsize(root + '\\' + file) / 1000000)
-                    if anime_name in json_data:
-                        if season not in json_data[anime_name]:
-                            json_data[anime_name].append(season)
-                            json_data[anime_name].append({folge: collect_info(root+'\\'+file, size)})
+                if not simulation_mode:
+                    for file in files:
+                        if "txt" not in file:
+                            print(file)
+                            folge += 1
+                            size = round(os.path.getsize(root + '\\' + file) / 1000000)
+                            if anime_name in json_data:
+                                if season not in json_data[anime_name]:
+                                    json_data[anime_name].append(season)
+                                    json_data[anime_name].append({folge: collect_info(root + '\\' + file, size)})
+                                else:
+                                    json_data[anime_name].append({folge: collect_info(root + '\\' + file, size)})
+                            else:
+                                json_data[anime_name] = []
+                                json_data[anime_name].append(season)
+                                json_data[anime_name].append({folge: collect_info(root + '\\' + file, size)})
                         else:
-                            json_data[anime_name].append({folge: collect_info(root+'\\'+file, size)})
-                    else:
-                        json_data[anime_name] = []
-                        json_data[anime_name].append(season)
-                        json_data[anime_name].append({folge: collect_info(root+'\\'+file, size)})
+                            json_data = {}
         json.dump(json_data, f, indent=4, ensure_ascii=False)
+
+# do_index(index_path, anime_path)
