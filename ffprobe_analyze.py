@@ -35,15 +35,18 @@ def collect_info(path, size):
             audio_info_list = []
             # print('Audio codec:', item['codec_name'], 'Audio lang:', item['tags']['language'])
             audio_info_list.append(item['codec_name'])
-            audio_info_list.append(item['tags']['language'])
+            if 'tag' in item:
+                audio_info_list.append(item['tags']['language'])
             result['audio'].append(audio_info_list)
         # get subtitle streams informations
         if item['codec_type'] == 'subtitle':
             subtitle_info_list = []
             # print('Sub lang:', item['tags']['language'], 'Sub name:', item['tags']['title'])
-            subtitle_info_list.append(item['tags']['language'])
-            if 'title' in item['tags']:
-                subtitle_info_list.append(item['tags']['title'])
+            if 'tags' in item:
+                if 'language' in item['tags']:
+                    subtitle_info_list.append(item['tags']['language'])
+                if 'title' in item['tags']:
+                    subtitle_info_list.append(item['tags']['title'])
             result['subtitle'].append(subtitle_info_list)
     # print('Dur:', duration, 'min')
     result['time'] = f'{duration} min'
